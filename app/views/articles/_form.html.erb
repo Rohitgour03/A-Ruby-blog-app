@@ -1,0 +1,66 @@
+<%= form_with(model: article) do |form| %>
+  <% if article.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(article.errors.count, "error") %> prohibited this article from being saved:</h2>
+
+      <ul>
+        <% article.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :title, style: "display: block" %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div>
+    <%= form.label :body, style: "display: block" %>
+    <%= form.text_field :body %>
+  </div>
+
+  <div>
+    <%= form.label :author, style: "display: block" %>
+    <%= form.text_field :author %>
+  </div>
+
+  <br/>
+
+  <%= form.label :category_ids, 'Categories' %>
+  <br/>
+  <% Category.all.each do |category| %>
+    <label>
+      <%= check_box_tag 'article[category_ids][]', category.id, @article.categories.include?(category) %>
+      <%= category.title %>
+    </label>
+  <% end %>
+
+  <br/>
+  <br/>
+
+  <%= form.label :tag_ids, 'Tags' %>
+  <br/>
+  <% Tag.all.each do |tag| %>
+    <label>
+      <%= check_box_tag 'article[tag_ids][]', tag.id, @article.tags.include?(tag) %>
+      <%= tag.title %>
+    </label>
+  <% end %>
+
+  <br/>
+  <br/>
+
+  <div>
+    <%= form.label :published_at, style: "display: block" %>
+    <%= form.date_field :published_at %>
+  </div>
+
+  <br/>
+  <br/>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

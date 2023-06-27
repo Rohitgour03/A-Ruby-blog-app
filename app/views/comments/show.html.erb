@@ -1,0 +1,13 @@
+<div>
+    <p>
+    <strong>User:</strong>
+    <%= @comment.user %>
+    </p>
+
+    <p>
+    <strong>Comment:</strong>
+    <%= @comment.body %>
+    </p>
+</div>
+
+<%= link_to "Edit this Comment", edit_article_comment_path %>
