@@ -1,4 +1,6 @@
 class CommentsController < ApplicationController
+    before_action :authenticate_user!, except: [:index, :show] 
+    
     def index
         @article = Article.find(params[:article_id])
         @comment = @article.comments.all
