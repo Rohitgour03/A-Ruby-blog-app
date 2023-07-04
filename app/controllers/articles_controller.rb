@@ -7,7 +7,11 @@ class ArticlesController < ApplicationController
     def index
         @articles = Article.all
 
-        if params[:search] 
+        if params[:sort_by] == 'title'
+            @articles = @articles.order(title: :asc)
+        elsif params[:sort_by] == 'published_date'
+            @articles = @articles.order(created_at: :desc)
+        elsif params[:search] 
             @articles = Article.where("title LIKE ?", "%#{params[:search]}%")
         end
     end
