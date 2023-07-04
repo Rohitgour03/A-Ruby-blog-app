@@ -1,0 +1,52 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Articles</h1>
+
+<%= link_to "New article", new_article_path %>
+<br/>
+<br/>
+
+<%= link_to "Sort by Title", articles_path(sort_by: 'title') %>
+<br/>
+
+<%= link_to "Sort by Published Date", articles_path(sort_by: 'published_date') %>
+<br/>
+<br/>
+
+<%= form_tag articles_path, method: :get do %>
+  <%= text_field_tag :search, params[:search], placeholder: "Search articles" %>
+  <%= submit_tag "Search" %>
+<% end %>
+<br/>
+
+
+<div id="articles">
+  <% @articles.each do |article| %>
+    <%= render article %>
+    <p>
+      <%= link_to "Show this article", article %>
+    </p>
+  <% end %>
+</div>
+
+<% if @total_articles > @per_page %>
+  <div class="pagination">
+    <% if @current_page > 1 %>
+      <%= link_to 'Previous', articles_path(page: @current_page - 1) %>
+    <% end %>
+
+    <% if @total_articles/@per_page == 0 %>
+      <% 1.upto(@total_articles/@per_page) do |page| %>
+        <%= link_to page, articles_path(page: page), class: ('active' if page == @current_page) %>
+      <% end %>
+    <% else %>
+      <% 1.upto(@total_articles/@per_page + 1) do |page| %>
+        <%= link_to page, articles_path(page: page), class: ('active' if page == @current_page) %>
+      <% end %>
+    <% end %>
+    
+    <% if @current_page <= @total_articles/@per_page %>
+      <%= link_to 'Next', articles_path(page: @current_page + 1) %>
+    <% end %>
+  </div>
+<% end %>
