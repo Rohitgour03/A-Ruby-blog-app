@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   end
 
   resources :categories
+  resources :tags
 
   # Defines the root path route ("/")
   root "articles#index"
