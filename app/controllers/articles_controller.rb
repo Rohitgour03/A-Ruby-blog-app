@@ -4,8 +4,15 @@ class ArticlesController < ApplicationController
     before_action :set_article, only: %i[ show edit update destroy ]
 
     # GET /articles or /articles.json
-    def index
-        @articles = Article.all
+    def index 
+        @per_page = 3 
+        @current_page = params[:page].present? ? params[:page].to_i : 1
+        puts "Current page is now: #{@current_page}"
+        offset = (@current_page - 1) * @per_page
+        puts "offset is now: #{offset}"
+
+        @articles = Article.limit(@per_page).offset(offset)
+        @total_articles = Article.count
 
         if params[:sort_by] == 'title'
             @articles = @articles.order(title: :asc)
