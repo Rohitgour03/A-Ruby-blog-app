@@ -6,6 +6,10 @@ class ArticlesController < ApplicationController
     # GET /articles or /articles.json
     def index
         @articles = Article.all
+
+        if params[:search] 
+            @articles = Article.where("title LIKE ?", "%#{params[:search]}%")
+        end
     end
 
     # GET /articles/1 or /articles/1.json
