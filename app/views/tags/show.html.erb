@@ -1,0 +1,13 @@
+<h2> <%= @tag.title %> </h2>
+
+<% @articles.each do |article| %>
+  <%= render article %>
+  <p>
+    <%= link_to "Show this article", article %>
+  </p>
+<% end %>
+
+<div>
+  <%= link_to "Back to tags", tags_path %>
+  <%= button_to "Destroy this tag", @tag, method: :delete %>
+</div>
